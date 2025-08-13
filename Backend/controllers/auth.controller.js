@@ -3,8 +3,8 @@ const User = require("../models/user.model");
 const City = require('../models/city.model');
 const jwt = require("jsonwebtoken");
 const { sendEmail } = require('../utils/emailSender')
-const Contact = require('../models/contact.model');
-const passport = require('passport')
+//const Contact = require('../models/contact.model');
+//const passport = require('passport')
 const { generateAccessToken, generateRefreshToken } = require("../utils/token");
 
 // Helper to set cookies
@@ -149,7 +149,7 @@ const refreshToken = async (req, res) => {
 
 
 const updateUserPreferences = async (req, res) => {
-  const { city, interests } = req.body;
+  const { city} = req.body;
   const userId = req.user.userId;
 
   try {
@@ -189,7 +189,6 @@ const updateUserPreferences = async (req, res) => {
       user.nearbyCities = nearbyCities.map(c => c.name);
     }
 
-    if (interests) user.interests = interests;
 
     await user.save();
 

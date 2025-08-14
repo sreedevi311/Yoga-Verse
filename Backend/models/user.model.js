@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  level: {
+    type: String,
+    default: '',
+  },
   nearbyCities: [String],
   interests: [
     {

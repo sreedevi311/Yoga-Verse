@@ -80,16 +80,16 @@ export const useAuthStore = defineStore('auth', {
         this.logout()
       }
     },
-    async updatePreferences(city) {
+    async updatePreferences(city,level) {
       console.log('⚙️ updatePreferences called')
       console.log('🧾 Access token being used:', this.accessToken)
       console.log('📍 City:', city)
-      
+      console.log('📍 level:', level)
 
       try {
         const payload = {}
         if (city) payload.city = city
-
+        if (level) payload.level = level
         console.log('📦 Payload to send:', payload)
 
         const res = await api.put('/auth/update-preferences', payload, {

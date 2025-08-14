@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 export const usePreferencesStore = defineStore('preferences', () => {
   const selectedCity = ref('')
-  const selectedThemes = ref([])
+  const selectedLevel = ref([])
   const nearbyCities = ref([]) // Add this to the store
 
   function setNearbyCities(cities) {
@@ -14,16 +14,16 @@ export const usePreferencesStore = defineStore('preferences', () => {
     selectedCity.value = city
   }
 
-  function setThemes(themes) {
-    selectedThemes.value = themes
+  function setLevel(level) {
+    selectedLevel.value = level
   }
 
   return {
     selectedCity,
-    selectedThemes,
+    selectedLevel,
     setCity,
     nearbyCities,
     setNearbyCities,
-    setThemes
+    setLevel
   }
 })

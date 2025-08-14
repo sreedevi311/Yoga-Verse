@@ -71,7 +71,7 @@ const login = async (req, res) => {
     role:user.role,
     email: user.email,
     city: user.city,
-    interests: user.interests,
+    level: user.level,
     nearbyCities: user.nearbyCities,
   }
 });
@@ -100,7 +100,7 @@ const signup = async (req, res) => {
     role:newUser.role,
     email: newUser.email,
     city: newUser.city,
-    interests: newUser.interests,
+    level: newUser.level,
     nearbyCities: newUser.nearbyCities,
   }
 });
@@ -149,13 +149,16 @@ const refreshToken = async (req, res) => {
 
 
 const updateUserPreferences = async (req, res) => {
-  const { city} = req.body;
+  const { city, level } = req.body; // Now supports both, but either can be sent
   const userId = req.user.userId;
 
   try {
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
 
+    // Handle city update
     if (city) {
       user.city = city;
 
@@ -167,7 +170,7 @@ const updateUserPreferences = async (req, res) => {
 
       const [lng, lat] = baseCity.location.coordinates;
 
-      // Find nearby cities within 50 km (distance in meters)
+      // Find nearby cities within 30 km
       const nearbyCities = await City.aggregate([
         {
           $geoNear: {
@@ -177,18 +180,18 @@ const updateUserPreferences = async (req, res) => {
             spherical: true
           }
         },
-        {
-          $match: { name: { $ne: city } } // exclude base city itself
-        },
-        {
-          $project: { _id: 0, name: 1 }
-        }
+        { $match: { name: { $ne: city } } }, // exclude the base city
+        { $project: { _id: 0, name: 1 } }
       ]);
 
-      // Extract just the names
+      // Save just names
       user.nearbyCities = nearbyCities.map(c => c.name);
     }
 
+    // Handle level update
+    if (level) {
+      user.level = level;
+    }
 
     await user.save();
 
@@ -197,6 +200,7 @@ const updateUserPreferences = async (req, res) => {
       user: {
         email: user.email,
         city: user.city,
+        level: user.level,
         interests: user.interests,
         nearbyCities: user.nearbyCities
       }
@@ -206,6 +210,7 @@ const updateUserPreferences = async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error' });
   }
 };
+
 
 // 📨 Contact Form Submission
 const submitContactForm = async (req, res) => {

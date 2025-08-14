@@ -1,76 +1,37 @@
 <template>
-  <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-amber-900 via-stone-800 to-slate-900">
-    <!-- Background yoga image -->
-     <div class="absolute inset-0 opacity-30">
-      <img 
-        src="https://cdn.pixabay.com/photo/2019/06/16/14/45/yoga-4288477_1280.jpg"
-        alt="Yoga background"
-        class="w-full h-full object-cover"
-      />
-    </div>
-    <!-- Added dark overlay to match landing page -->
-    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-    
-    <!-- Enhanced floating yoga elements with more variety -->
-    <div class="absolute inset-0 pointer-events-none">
-      <!-- Lotus flowers -->
-      <div class="lotus-float absolute top-20 left-10 w-8 h-8 opacity-20">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Lotus_flower_icon.svg/1024px-Lotus_flower_icon.svg.png" alt="lotus" class="w-full h-full animate-pulse" />
-      </div>
-      <div class="lotus-float-delayed absolute top-40 right-20 w-6 h-6 opacity-15">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Lotus_flower_icon.svg/1024px-Lotus_flower_icon.svg.png" alt="lotus" class="w-full h-full animate-pulse" />
-      </div>
-      
-      <!-- Om symbols -->
-      <div class="om-float absolute bottom-32 left-16 w-10 h-10 opacity-10">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/1024px-Om_symbol.svg.png" alt="om" class="w-full h-full animate-spin-slow" />
-      </div>
-      <div class="om-float-reverse absolute top-60 right-10 w-8 h-8 opacity-15">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/1024px-Om_symbol.svg.png" alt="om" class="w-full h-full animate-spin-slow-reverse" />
-      </div>
-      
-      <!-- Chakra symbols -->
-      <div class="chakra-glow absolute bottom-20 right-32 w-12 h-12 opacity-20">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Chakra_Wheel.svg/1024px-Chakra_Wheel.svg.png" alt="chakra" class="w-full h-full animate-pulse-slow" />
-      </div>
-      
-      <!-- Meditation poses -->
-      <div class="meditation-float absolute top-1/3 left-8 w-16 h-16 opacity-15">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Meditation_icon.svg/1024px-Meditation_icon.svg.png" alt="meditation" class="w-full h-full animate-breathe" />
-      </div>
-      
-      <!-- Zen circles -->
-      <div class="zen-float absolute bottom-40 left-1/4 w-10 h-10 opacity-25">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Enso.svg/1024px-Enso.svg.png" alt="zen circle" class="w-full h-full animate-pulse-slow" />
-      </div>
+  <div class="min-h-screen bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 flex items-center justify-center p-4">
+    <!-- Background yoga imagery -->
+    <div class="absolute inset-0 opacity-20">
+      <img src="https://i.pinimg.com/736x/f7/de/48/f7de489dcc82a75fda3376e992eec3fc.jpg" alt="" class="w-full h-full object-cover" />
     </div>
 
-    <!-- Header -->
-    <header class="relative z-10 flex justify-between items-center p-6">
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-white bg-opacity-20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-          <div class="w-4 h-4 border-2 border-white rotate-45"></div>
+    <!-- Content -->
+    <div class="relative z-10 w-full max-w-md">
+      <!-- Logo and branding -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm rounded-lg mb-4">
+          <div class="w-8 h-8 border-2 border-white rotate-45 rounded-sm"></div>
         </div>
-        <span class="text-white text-xl font-semibold">YogaVerse</span>
+        <h1 class="text-3xl font-light text-white mb-2">YogaVerse</h1>
+        <p class="text-stone-300 text-sm">Begin your wellness journey</p>
       </div>
-    </header>
 
-    <div class="relative z-10 flex items-center justify-center py-16 p-4">
-      <div class="w-full max-w-md">
-        <!-- Updated header styling for dark theme -->
-        <div class="text-center mb-8 animate-fade-in">
-          <h2 class="text-3xl font-light text-white mb-2">Begin Your Journey</h2>
-          <p class="text-white text-opacity-80">Discover your inner universe with us</p>
+      <!-- Signup form -->
+      <div class="bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-lg">
+        <!-- Form header -->
+        <div class="text-center p-6 pb-0">
+          <h2 class="text-2xl font-light text-white mb-2">Create Account</h2>
+          <p class="text-stone-300 text-sm">Start your transformation today</p>
         </div>
 
-        <!-- Updated form container with dark theme glass morphism -->
-        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white border-opacity-20 animate-slide-up">
-          <form @submit.prevent="handleSignup" class="space-y-6">
-            <!-- Google Sign Up Button -->
+        <!-- Form content -->
+        <form @submit.prevent="handleSubmit" class="p-6">
+          <!-- Google signup button -->
+          <div class="mb-6">
             <button
               type="button"
-              @click="signUpWithGoogle"
-              class="w-full flex items-center justify-center space-x-3 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 font-medium py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              @click="handleGoogleSignup"
+              class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
             >
               <svg class="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -78,141 +39,165 @@
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              <span>Continue with Google</span>
+              Continue with Google
             </button>
-            <p v-if="googleErrorMessage" class="text-red-400 text-sm text-center mb-4">{{ googleErrorMessage }}</p>
+            
+            <!-- Error message for Google signup -->
+            <p v-if="googleErrorMessage" class="text-red-400 text-sm text-center mt-4">{{ googleErrorMessage }}</p>
             
             <!-- Divider -->
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-white border-opacity-30"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-transparent text-white text-opacity-70">or sign up with email</span>
-              </div>
+            <div class="flex items-center my-6">
+              <div class="flex-1 border-t border-white/20"></div>
+              <span class="px-4 text-stone-400 text-sm">or</span>
+              <div class="flex-1 border-t border-white/20"></div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Full Name field -->
+            <div class="space-y-2">
+              <label for="fullName" class="block text-stone-200 font-light text-sm">
+                Full Name
+              </label>
+              <input
+                id="fullName"
+                v-model="fullName"
+                type="text"
+                placeholder="Enter your full name"
+                class="w-full px-3 py-2 bg-white/10 border border-white/30 rounded-md text-white placeholder:text-stone-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
+                :class="{ 'border-red-400': errors.fullName }"
+                required
+              />
+              <p v-if="errors.fullName" class="text-red-400 text-xs">{{ errors.fullName }}</p>
             </div>
 
-            <!-- Form Inputs -->
-            <div class="space-y-4">
-              <div class="grid grid-cols-2 gap-4">
-                <div class="transform transition-all duration-300 hover:scale-105">
-                  <label for="firstName" class="block text-sm font-medium text-white text-opacity-90 mb-2">First Name</label>
-                  <input
-                    id="firstName"
-                    v-model="firstName"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent backdrop-blur-sm transition-all duration-300"
-                    placeholder="First name"
-                  />
-                  <p v-if="errors.firstName" class="text-red-400 text-sm mt-1">{{ errors.firstName }}</p>
-                </div>
-                <div class="transform transition-all duration-300 hover:scale-105">
-                  <label for="lastName" class="block text-sm font-medium text-white text-opacity-90 mb-2">Last Name</label>
-                  <input
-                    id="lastName"
-                    v-model="lastName"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent backdrop-blur-sm transition-all duration-300"
-                    placeholder="Last name"
-                  />
-                  <p v-if="errors.lastName" class="text-red-400 text-sm mt-1">{{ errors.lastName }}</p>
-                </div>
-              </div>
+            <!-- Email field -->
+            <div class="space-y-2">
+              <label for="email" class="block text-stone-200 font-light text-sm">
+                Email
+              </label>
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                placeholder="your@email.com"
+                class="w-full px-3 py-2 bg-white/10 border border-white/30 rounded-md text-white placeholder:text-stone-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
+                :class="{ 'border-red-400': errors.email }"
+                required
+              />
+              <p v-if="errors.email" class="text-red-400 text-xs">{{ errors.email }}</p>
+            </div>
 
-              <div class="transform transition-all duration-300 hover:scale-105">
-                <label for="email" class="block text-sm font-medium text-white text-opacity-90 mb-2">Email</label>
+            <!-- Password field -->
+            <div class="space-y-2">
+              <label for="password" class="block text-stone-200 font-light text-sm">
+                Password
+              </label>
+              <div class="relative">
                 <input
-                  id="email"
-                  v-model="email"
-                  type="email"
+                  id="password"
+                  v-model="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  placeholder="Create a strong password"
+                  class="w-full px-3 py-2 pr-10 bg-white/10 border border-white/30 rounded-md text-white placeholder:text-stone-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
+                  :class="{ 'border-red-400': errors.password }"
                   required
-                  class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent backdrop-blur-sm transition-all duration-300"
-                  placeholder="Enter your email"
                 />
-                <p v-if="errors.email" class="text-red-400 text-sm mt-1">{{ errors.email }}</p>
+                <button
+                  type="button"
+                  @click="showPassword = !showPassword"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white transition-colors"
+                >
+                  <svg v-if="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                  </svg>
+                  <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
               </div>
+              <p v-if="errors.password" class="text-red-400 text-xs">{{ errors.password }}</p>
+            </div>
 
-              <div class="transform transition-all duration-300 hover:scale-105">
-                <label for="password" class="block text-sm font-medium text-white text-opacity-90 mb-2">Password</label>
-                <div class="relative">
-                  <input
-                    id="password"
-                    v-model="password"
-                    :type="showPassword ? 'text' : 'password'"
-                    required
-                    class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent backdrop-blur-sm transition-all duration-300 pr-12"
-                    placeholder="Create a password"
-                  />
-                  <button
-                    type="button"
-                    @click="showPassword = !showPassword"
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-opacity-60 hover:text-white transition-colors"
-                  >
-                    {{ showPassword ? '👁' : '👁‍🗨' }}
-                  </button>
-                </div>
-                <p v-if="errors.password" class="text-red-400 text-sm mt-1">{{ errors.password }}</p>
-              </div>
-
-              <div class="transform transition-all duration-300 hover:scale-105">
-                <label for="confirmPassword" class="block text-sm font-medium text-white text-opacity-90 mb-2">Confirm Password</label>
+            <!-- Confirm Password field -->
+            <div class="space-y-2">
+              <label for="confirmPassword" class="block text-stone-200 font-light text-sm">
+                Confirm Password
+              </label>
+              <div class="relative">
                 <input
                   id="confirmPassword"
                   v-model="confirmPassword"
-                  type="password"
-                  required
-                  class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent backdrop-blur-sm transition-all duration-300"
-                  :class="{ 'border-red-400': password && confirmPassword && password !== confirmPassword }"
+                  :type="showConfirmPassword ? 'text' : 'password'"
                   placeholder="Confirm your password"
+                  class="w-full px-3 py-2 pr-10 bg-white/10 border border-white/30 rounded-md text-white placeholder:text-stone-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
+                  :class="{ 'border-red-400': errors.confirmPassword }"
+                  required
                 />
-                <p v-if="password && confirmPassword && password !== confirmPassword" class="text-red-400 text-sm mt-1">
-                  Passwords don't match
-                </p>
-                <p v-if="errors.confirmPassword" class="text-red-400 text-sm mt-1">{{ errors.confirmPassword }}</p>
+                <button
+                  type="button"
+                  @click="showConfirmPassword = !showConfirmPassword"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white transition-colors"
+                >
+                  <svg v-if="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                  </svg>
+                  <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
               </div>
+              <p v-if="errors.confirmPassword" class="text-red-400 text-xs">{{ errors.confirmPassword }}</p>
             </div>
 
-            <!-- Terms -->
-            <div class="space-y-4">
-              <label class="flex items-start">
-                <input type="checkbox" v-model="agreeToTerms" required class="rounded border-white border-opacity-30 bg-white bg-opacity-20 text-white focus:ring-white focus:ring-opacity-50 mt-1" />
-                <span class="ml-2 text-sm text-white text-opacity-80">
-                  I agree to the <a href="#" class="text-white hover:text-amber-200 underline">Terms of Service</a> 
-                  and <a href="#" class="text-white hover:text-amber-200 underline">Privacy Policy</a>
-                </span>
+            <!-- Terms and conditions -->
+            <div class="flex items-start space-x-2 text-sm">
+              <input
+                v-model="agreeToTerms"
+                type="checkbox"
+                class="mt-0.5 rounded border-white/30 bg-white/10 text-amber-400 focus:ring-amber-400/20 focus:ring-2"
+                required
+              />
+              <label class="text-stone-300 cursor-pointer">
+                I agree to the 
+                <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Terms of Service</a>
+                and 
+                <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Privacy Policy</a>
               </label>
-              <p v-if="errors.agreeToTerms" class="text-red-400 text-sm mt-1">{{ errors.agreeToTerms }}</p>
             </div>
+            <p v-if="errors.agreeToTerms" class="text-red-400 text-xs">{{ errors.agreeToTerms }}</p>
+          </div>
 
-            <!-- General Error Message -->
-            <p v-if="signupError" class="text-red-400 text-sm text-center mb-4">{{ signupError }}</p>
+          <!-- General Error Message -->
+          <p v-if="signupError" class="text-red-400 text-sm text-center mt-4">{{ signupError }}</p>
 
-            <!-- Submit -->
+          <!-- Submit button and login link -->
+          <div class="mt-6 space-y-4">
             <button
               type="submit"
               :disabled="isLoading || !isFormValid"
-              class="w-full bg-amber-100 bg-opacity-90 hover:bg-opacity-100 text-amber-900 font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-light py-3 px-4 rounded-md text-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
             >
-              <span v-if="!isLoading">Start Your Journey</span>
-              <span v-else class="flex items-center justify-center">
-                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-amber-900 mr-2"></div>
-                Creating account...
+              <span v-if="isLoading" class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating Account...
               </span>
+              <span v-else>Create Account</span>
             </button>
 
-            <!-- Login Switch -->
-            <div class="text-center">
-              <p class="text-white text-opacity-80">
-                Already have an account? 
-                <button @click="switchToLogin" class="text-white hover:text-amber-200 font-medium transition-colors">
-                  Login
-                </button>
-              </p>
+            <div class="text-center text-stone-300 text-sm">
+              Already have an account?
+              <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors ml-1" @click="switchToLogin">
+                Log in
+              </a>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -223,50 +208,52 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
-const router = useRouter()
-const authStore = useAuthStore()
-
-const firstName = ref('')
-const lastName = ref('')
+// Reactive state
+const fullName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const showPassword = ref(false)
 const agreeToTerms = ref(false)
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
 const isLoading = ref(false)
-const errors = ref({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', agreeToTerms: '' })
+const errors = ref({ fullName: '', email: '', password: '', confirmPassword: '', agreeToTerms: '' })
 const googleErrorMessage = ref('')
 const signupError = ref('')
+const router = useRouter()
+const authStore = useAuthStore()
 
+// Form validation
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email)
 
 const isFormValid = computed(() => {
-  return firstName.value && 
-         lastName.value && 
-         email.value && 
+  return fullName.value &&
+         email.value &&
          validateEmail(email.value) &&
-         password.value && 
-         confirmPassword.value && 
-         password.value === confirmPassword.value && 
+         password.value &&
+         confirmPassword.value &&
+         password.value === confirmPassword.value &&
          agreeToTerms.value
 })
 
-const handleSignup = async () => {
+// Form submission handler
+const handleSubmit = async () => {
   if (!isFormValid.value) {
     errors.value = {
-      firstName: firstName.value ? '' : 'First name is required',
-      lastName: lastName.value ? '' : 'Last name is required',
+      fullName: fullName.value ? '' : 'Full name is required',
       email: email.value ? (validateEmail(email.value) ? '' : 'Invalid email format') : 'Email is required',
       password: password.value ? '' : 'Password is required',
       confirmPassword: confirmPassword.value ? '' : 'Confirm password is required',
-      agreeToTerms: agreeToTerms.value ? '' : 'You must agree to the terms',
+      agreeToTerms: agreeToTerms.value ? '' : 'You must agree to the terms'
+    }
+    if (password.value && confirmPassword.value && password.value !== confirmPassword.value) {
+      errors.value.confirmPassword = 'Passwords do not match'
     }
     return
   }
 
   isLoading.value = true
   try {
-    // Since authStore.signup only accepts email and password, we pass those
     await authStore.signup(email.value, password.value)
     console.log('Signup successful, user:', authStore.user)
     if (authStore.user.role === 'admin') {
@@ -275,36 +262,26 @@ const handleSignup = async () => {
       router.push('/Home')
     }
   } catch (error) {
-    console.error("Signup failed:", error.response?.data || error.message)
+    console.error('Signup failed:', error.response?.data || error.message)
     signupError.value = error.response?.data?.message || 'Signup failed. Please try again.'
   } finally {
     isLoading.value = false
   }
 }
 
-const signUpWithGoogle = () => {
+// Google signup handler
+const handleGoogleSignup = async () => {
   googleErrorMessage.value = ''
-  window.location.href = 'http://localhost:5000/yoga-verse/auth/google?mode=signup'
+  try {
+    window.location.href = 'http://localhost:5000/yoga-verse/auth/google?mode=signup'
+  } catch (error) {
+    console.error('Google signup failed:', error)
+    googleErrorMessage.value = 'Google signup failed. Please try again.'
+  }
 }
 
+// Switch to login page
 const switchToLogin = () => {
   router.push('/login')
 }
 </script>
-
-<style scoped>
-@keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-.lotus-float { animation: lotus-float 6s ease-in-out infinite; }
-.lotus-float-delayed { animation: lotus-float 6s ease-in-out infinite 2s; }
-.om-float { animation: om-float 8s ease-in-out infinite; }
-.om-float-reverse { animation: om-float 8s ease-in-out infinite reverse; }
-.chakra-glow { animation: pulse-slow 3s ease-in-out infinite; }
-.meditation-float { animation: meditation-float 10s ease-in-out infinite; }
-.zen-float { animation: zen-float 12s ease-in-out infinite; }
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
-.animate-spin-slow-reverse { animation: spin-slow-reverse 25s linear infinite; }
-.animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
-</style>

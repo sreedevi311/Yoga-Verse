@@ -1,51 +1,75 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Import your Home page component
+import LandingPage from '../components/LandingPage.vue'
+import Signup from '../components/SignUp.vue'
+import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
-import Asanas from '@/components/Asanas.vue'
-import AsanaDetails from '@/components/AsanaDetails.vue'
-import EventPage from '@/components/EventPage.vue'
-import Communities from '@/components/communities.vue'
-import PractitionerCard from '@/components/PractitionerCard.vue'
-import Login from '@/components/Login.vue'
-import SignUp from '@/components/SignUp.vue'
-import LandingPage from '@/components/LandingPage.vue'
+//import Trainers from '../components/Trainers.vue'
+import EventPage from '../components/EventPage.vue'
+import Aipractice from '../components/AiPractice.vue'
 
+//import Profile from '../components/Profile.vue'
+import Communities from '../components/communities.vue'
+import AsanaDetails from '@/components/AsanaDetails.vue'
+import Asanas from '../components/Asanas.vue'
 const routes = [
   {
     path: '/',
-    name: '',
+    name: 'LandingPage',
     component: LandingPage
   },
   {
-    path: '/Home',
-    name: '',
-    component: Home
+    path: '/signup',
+    name: 'Signup',
+    component:Signup
   },
   {
     path: '/login',
-    name: '',
-    component: Login
+    name: 'Login',
+    component:Login
   },
   {
-    path: '/signup',
-    name: '',
-    component: SignUp
+    path: '/home',
+    name: 'Home',
+    component:Home
   },
+   /*{
+    path:'/trainers',
+    name:'Trainers',
+    component:Trainers
+  },
+
   {
+    path:'/profile',
+    name: 'Profile',
+    component:Profile
+  },*/
+  {
+  path:'/eventpage',
+  name:'EventPage',
+  component:EventPage
+},
+{
+    path:'/ai-practice',
+    name: 'Aipractice',
+    component:Aipractice
+},
+{
     path: '/communities',
     name: '',
     component: Communities
   },
   {
-    path: '/events',
-    name: '',
-    component: EventPage
+path:'/asanas',
+name:'',
+component:Asanas
   },
   {
-    path:`/asanas/:id`,
+    path:'/asanas/:id',
     component:AsanaDetails
   }
+
 ]
 
 const router = createRouter({

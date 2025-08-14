@@ -29,15 +29,18 @@
                 Trainers
               </a>
               <router-link 
-  to="/communities" 
-  class="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors"
->
-  Community
-</router-link>
+                to="/communities" 
+                class="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors"
+              >
+                Community
+              </router-link>
 
-              <a href="#" class="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors">
+              <router-link 
+                to="/events" 
+                class="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors"
+              >
                 Events
-              </a>
+              </router-link>
             </nav>
           </div>
 

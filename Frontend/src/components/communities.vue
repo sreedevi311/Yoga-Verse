@@ -15,7 +15,6 @@
           :class="{ 'bg-cream-200': selectedCommunity?.id === community._id }"
         >
           <div>
-            <p class="text-sm font-medium">{{ community.theme.name }}</p>
             <p class="text-xs text-olive-300 truncate">Cities: {{ community.cities.join(', ') }}</p>
           </div>
           <button

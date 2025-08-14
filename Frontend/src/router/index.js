@@ -38,6 +38,11 @@ const routes = [
     component: Communities
   },
   {
+    path: '/events',
+    name: '',
+    component: EventPage
+  },
+  {
     path:`/asanas/:id`,
     component:AsanaDetails
   }

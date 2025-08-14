@@ -21,11 +21,15 @@ mongoose
 
 
   const authRoutes = require('./routes/auth.routes');
-  const authenticate = require("./middleware/auth.middleware");
+  const communityRoutes = require('./routes/communityRoutes');
+  const eventRoutes=require('./routes/event.routes')
 
   app.use(cookieParser());
 
   app.use('/yoga-verse/auth', authRoutes);
+  app.use('/yoga-verse/communities',communityRoutes)
+  app.use('/yoga-verse/events',eventRoutes)
+
 // Schema
 const asanaSchema = new mongoose.Schema({
   asana_name: String,

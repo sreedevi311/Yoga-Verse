@@ -97,21 +97,20 @@ const deletePost = async (req, res) => {
 // POST /communities/suggest
 const suggestCommunities = async (req, res) => {
   try {
-    const { userCity, interests, nearbyCities } = req.body;
+    const { userCity, nearbyCities } = req.body;
     if (req.user.role === 'admin') {
       const allCommunities = await Community.find().populate('theme');
       return res.json(allCommunities); // ✅ Return everything for admin
     }
 
-    console.log('suggest request:', { userCity, interests, nearbyCities });
+    console.log('suggest request:', { userCity, nearbyCities });
 
 
     const citiesToMatch = [userCity, ...(Array.isArray(nearbyCities) ? nearbyCities : [])];
 
     const communities = await Community.find({
-      theme: { $in: interests },
       cities: { $in: citiesToMatch }
-    }).populate('theme');;
+    });
 console.log(communities)
     res.json(communities);
   } catch (err) {
@@ -191,6 +190,7 @@ const createCommunity = async (req, res) => {
 const getJoinedCommunities = async (req, res) => {
   const user = await User.findById(req.params.userId)
   if (!user) return res.status(404).json({ message: 'User not found' })
+    console.log(user.communities)
   res.json({ joinedCommunities: user.communities })
 }
 

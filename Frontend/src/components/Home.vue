@@ -90,6 +90,7 @@
           v-if="isLoggedIn"
           class="p-2 rounded-xl hover:bg-white border border-gray-200 bg-white/70 transition"
           title="Profile"
+          @click="openProfilePage"
         >
           <User class="h-5 w-5" />
         </button>
@@ -158,6 +159,42 @@
         </div>
       </div>
     </div>
+
+    <!-- Level Selector Modal -->
+<div
+  v-if="ui.showLevelModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+>
+  <div class="w-full max-w-md rounded-2xl bg-white shadow-2xl border border-gray-200">
+    <!-- Header -->
+    <div class="p-6 border-b border-gray-200 flex items-start justify-between">
+      <div>
+        <h2 class="text-xl font-semibold">Select Your Level</h2>
+        <p class="text-sm text-gray-500 mt-1">Choose your yoga experience level.</p>
+      </div>
+      <button
+        @click="ui.showLevelModal = false"
+        class="h-9 w-9 grid place-items-center rounded-xl border border-gray-200 hover:bg-gray-50"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Options -->
+    <div class="p-6">
+      <div class="grid grid-cols-1 gap-3">
+        <button
+          v-for="level in levels"
+          :key="level"
+          @click="handleLevelSelect(level)"
+          class="px-3 py-2 rounded-xl border border-gray-200 bg-white hover:border-emerald-600/50 hover:bg-emerald-50 text-sm transition"
+        >
+          {{ level }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- MAIN -->
     <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -374,20 +411,22 @@ import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 import { usePreferencesStore } from '@/stores/preferences'
 import { Search, MapPin, User, ChevronRight, Camera, Calendar, Star, Facebook, Instagram, Twitter, Mail, Phone } from 'lucide-vue-next'
+import { useEventStore } from '@/stores/event'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const eventStore = useEventStore()
 const ui = useUiStore()
 const prefs = usePreferencesStore()
 
-// Search
+// Search bar input
 const searchQuery = ref('')
 
-// Location selection with localStorage persistence
+// LOCATION PERSISTENCE
 const selectedLocation = ref(localStorage.getItem('selectedLocation') || 'New York, NY')
 watch(selectedLocation, (val) => localStorage.setItem('selectedLocation', val))
 
-// Modal search + cities
+// Location Modal search
 const search = ref('')
 const cities = ref([
   { _id: '1', name: 'Nidadavolu' },
@@ -406,42 +445,35 @@ const filteredCities = computed(() =>
   cities.value.filter((c) => c.name.toLowerCase().includes(search.value.toLowerCase()))
 )
 
-// Auth
+// LEVEL SELECTION MODAL
+const levels = ref(['Beginner', 'Intermediate',  'Expert'])
+function handleLevelSelect(level) {
+  if (!authStore.user || !authStore.user._id) {
+    router.push('/login')
+    return
+  }
+  prefs.setLevel(level)
+  authStore.updatePreferences({ level })
+  ui.showLevelModal = false
+}
+
+// AUTH
 const isLoggedIn = computed(() => !!authStore.user)
 const userName = computed(() => authStore.user?.name || 'Yogi')
 
-// Events + practitioners (kept from original features)
-const events = ref([
-  {
-    title: 'Sunrise Yoga Session',
-    date: 'Oct 15, 2024',
-    location: 'Central Park, NY',
-    instructor: 'Lala Sundara',
-    image: 'https://media.istockphoto.com/id/888019184/photo/rear-view-of-group-of-people-doing-yoga-meditation-exercises-on-a-terrace.jpg?s=612x612&w=0&k=20&c=ce4gJT43Pl1kIig5-_KZU8l4fhKbRDlaYxne28a6OeA='
-  },
-  {
-    title: 'Vinyasa Flow Workshop',
-    date: 'Oct 20, 2024',
-    location: 'Brooklyn Studio, NY',
-    instructor: 'Ethan Harmony',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSknLv_Fetuy8R8jbrXyJc1WM_1qKGrXnn7sA&s'
-  },
-  {
-    title: 'Meditation Retreat',
-    date: 'Nov 5, 2024',
-    location: 'Hudson Valley, NY',
-    instructor: 'Sophie Light',
-    image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/8b/62/3b/caption.jpg?w=1200&h=-1&s=1'
-  }
-])
-
-
+// PRACTITIONERS
 const practitioners = ref([
   { name: 'Lala Sundara', level: 'Master', specialty: 'Hatha Yoga', rating: '4.8', sessions: 120 },
   { name: 'Ethan Harmony', level: 'Expert', specialty: 'Vinyasa Flow', rating: '4.7', sessions: 95 },
   { name: 'Sophie Light', level: 'Advanced', specialty: 'Meditation', rating: '4.9', sessions: 80 }
 ])
 
+function openProfilePage() {
+  router.push('/profile')
+}
+
+// EVENTS
+const events = ref([])
 function handleLocationSelect(city) {
   if (!authStore.user || !authStore.user._id) {
     router.push('/login')
@@ -449,18 +481,35 @@ function handleLocationSelect(city) {
   }
   prefs.setCity(city)
   selectedLocation.value = city
-  authStore.updatePreferences(city)
+  authStore.updatePreferences({ city })
   ui.showLocationModal = false
-  ui.showInterestModal = true
+  ui.showLevelModal = true // open level modal after selecting location
+}
+
+async function loadEventsForUser(user) {
+  if (user && user._id) {
+    const fetchedEvents = await eventStore.fetchUpcomingEvents(user._id)
+    events.value = fetchedEvents || []
+    if (user?.city) prefs.setCity(user.city)
+    if (user?.level) prefs.setLevel(user.level)
+  }
 }
 
 onMounted(async () => {
   await authStore.fetchProfile()
-  if (authStore.user?.city) {
-    prefs.setCity(authStore.user.city)
-  }
+  await loadEventsForUser(authStore.user)
 })
+
+watch(
+  () => authStore.user,
+  async (user) => {
+    await loadEventsForUser(user)
+  },
+  { immediate: true }
+)
 </script>
+
+
 
 <style scoped>
 /* Optional brand tokens if you want to reference them in custom CSS */

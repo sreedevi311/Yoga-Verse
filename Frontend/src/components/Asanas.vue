@@ -4,6 +4,9 @@
       <h1 class="text-4xl font-bold mb-4 text-olive-400 bg-clip-text bg-gradient-to-r from-olive-400 to-olive-600">
         Asana Library
       </h1>
+      <h6 class="text-2xl font-bold mb-4 text-olive-400 bg-clip-text bg-gradient-to-r from-olive-400 to-olive-600">
+        Level : {{ prefs.selectedLevel}}
+      </h6>
     </header>
 
     <div v-for="categoryObj in asanas" :key="categoryObj._id" class="mb-12">
@@ -56,6 +59,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+import { usePreferencesStore } from '@/stores/preferences'
 
 export default {
   data() {
@@ -63,7 +67,8 @@ export default {
       asanas: [],
       hoveredAsana: null,
       audioUrl: null,
-      loaded: ref(false)
+      loaded: ref(false),
+      prefs: usePreferencesStore(),
     };
   },
   methods: {

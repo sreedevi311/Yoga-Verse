@@ -9,7 +9,7 @@ import Home from '../components/Home.vue'
 import EventPage from '../components/EventPage.vue'
 import Aipractice from '../components/AiPractice.vue'
 
-//import Profile from '../components/Profile.vue'
+import Profile from '../components/Profile.vue'
 import Communities from '../components/communities.vue'
 import AsanaDetails from '@/components/AsanaDetails.vue'
 import Asanas from '../components/Asanas.vue'
@@ -38,13 +38,13 @@ const routes = [
     path:'/trainers',
     name:'Trainers',
     component:Trainers
-  },
+  },*/
 
   {
     path:'/profile',
     name: 'Profile',
     component:Profile
-  },*/
+  },
   {
   path:'/eventpage',
   name:'EventPage',

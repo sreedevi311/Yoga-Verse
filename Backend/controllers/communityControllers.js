@@ -103,7 +103,7 @@ const suggestCommunities = async (req, res) => {
       return res.json(allCommunities); // ✅ Return everything for admin
     }
 
-    console.log('suggest request:', { userCity, nearbyCities });
+    
 
 
     const citiesToMatch = [userCity, ...(Array.isArray(nearbyCities) ? nearbyCities : [])];
@@ -111,7 +111,7 @@ const suggestCommunities = async (req, res) => {
     const communities = await Community.find({
       cities: { $in: citiesToMatch }
     });
-console.log(communities)
+
     res.json(communities);
   } catch (err) {
     console.error('❌ Failed to fetch suggestions:', err);

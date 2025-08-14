@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 export const usePreferencesStore = defineStore('preferences', () => {
   const selectedCity = ref('')
-  const selectedLevel = ref([])
-  const nearbyCities = ref([]) // Add this to the store
+  const selectedLevel = ref('') // <-- change to string
+  const nearbyCities = ref([])
 
   function setNearbyCities(cities) {
     nearbyCities.value = cities
@@ -14,16 +15,19 @@ export const usePreferencesStore = defineStore('preferences', () => {
     selectedCity.value = city
   }
 
-  function setLevel(level) {
+  async function setLevel(level) {
     selectedLevel.value = level
+    // Call authStore here so all updates happen centrally
+    const authStore = useAuthStore()
+    await authStore.updatePreferences(selectedCity.value, level)
   }
 
   return {
     selectedCity,
     selectedLevel,
-    setCity,
     nearbyCities,
     setNearbyCities,
+    setCity,
     setLevel
   }
 })

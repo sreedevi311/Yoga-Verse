@@ -207,6 +207,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useUiStore } from '@/stores/ui'
 
 // Reactive state
 const fullName = ref('')
@@ -222,7 +223,7 @@ const googleErrorMessage = ref('')
 const signupError = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
-
+const ui = useUiStore()
 // Form validation
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email)
 
@@ -259,6 +260,7 @@ const handleSubmit = async () => {
     if (authStore.user.role === 'admin') {
       router.push('/admin-panel')
     } else {
+      ui.showLocationModal=true
       router.push('/Home')
     }
   } catch (error) {

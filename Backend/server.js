@@ -23,12 +23,16 @@ mongoose
   const authRoutes = require('./routes/auth.routes');
   const communityRoutes = require('./routes/communityRoutes');
   const eventRoutes=require('./routes/event.routes')
+  const uploadRoutes = require('./routes/uploadRoutes')
 
   app.use(cookieParser());
 
   app.use('/yoga-verse/auth', authRoutes);
   app.use('/yoga-verse/communities',communityRoutes)
   app.use('/yoga-verse/events',eventRoutes)
+const trainerRoutes=require('./routes/trainers.routes')
+app.use('/yoga-verse/trainers', trainerRoutes);
+app.use('/yoga-verse/upload', uploadRoutes)
 
 // Schema
 const asanaSchema = new mongoose.Schema({
@@ -63,7 +67,25 @@ app.get("/yoga-verse/asanas", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+app.get("/yoga-verse/asanas/today",async (req, res) => {
+  try {
+    // Count total docs
+    const count = await Asana.countDocuments();
 
+    if (count === 0) {
+      return res.status(404).json({ message: "No asanas found" });
+    }
+
+    // Pick a random skip index
+    const randomIndex = Math.floor(Math.random() * count);
+    const asana = await Asana.findOne().skip(randomIndex);
+
+    res.json(asana);
+  } catch (error) {
+    console.error("Error fetching Asana of the Day:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 // GET asana by ID
 app.get('/yoga-verse/asanas/:id', async (req, res) => {
@@ -93,6 +115,8 @@ app.get("/yoga-verse/asanas/:id/tts", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 // Start server
 app.listen(5000, () => console.log("🚀 Server running on port 5000"));

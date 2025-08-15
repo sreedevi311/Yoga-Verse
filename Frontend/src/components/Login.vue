@@ -168,7 +168,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 // Form validation
-const validateEmail = (email) => /\S+@\S+\.\S+/.test(email)
+const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)
+
 
 const isFormValid = computed(() => {
   return email.value && validateEmail(email.value) && password.value

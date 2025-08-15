@@ -207,19 +207,13 @@
             <p class="mt-3 text-gray-600 italic">"The body benefits from movement, and the mind benefits from stillness."</p>
             <div class="mt-6 flex items-center gap-3">
               <RouterLink
-                to="/practice"
+                to="/aipractice"
                 class="inline-flex items-center gap-2 px-5 h-11 rounded-xl bg-emerald-600 text-white shadow hover:bg-emerald-700 transition"
               >
                 Start Practicing
                 <ChevronRight class="h-4 w-4" />
               </RouterLink>
-              <button
-                @click="ui.showLocationModal = true"
-                class="inline-flex items-center gap-2 px-4 h-11 rounded-xl border border-gray-200 bg-white hover:bg-gray-50"
-              >
-                <MapPin class="h-4 w-4" />
-                {{ selectedLocation }}
-              </button>
+              
             </div>
           </div>
           <div class="relative">
@@ -233,30 +227,41 @@
       </section>
 
       <!-- ASANA OF THE DAY -->
-      <section>
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-semibold">Asana of the Day</h3>
-          <router-link 
-          to="/asanas/:id"
-          class="inline-flex items-center gap-2 px-3 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50">
-            View Details
-            <ChevronRight class="h-4 w-4" />
-          </router-link>
-        </div>
-        <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-          <div class="p-6 flex items-center gap-6">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNz2ubM7pAcNctDH0fxImi5_0OHfLN8Pgyzg&s"
-              alt="Vrikshasana"
-              class="w-28 h-28 rounded-xl object-cover"
-            />
-            <div class="flex-1">
-              <h4 class="text-xl font-semibold">Vrikshasana (Tree Pose)</h4>
-              <p class="mt-1 text-gray-600">Improves balance, strengthens legs, and enhances focus and concentration.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+  <section v-if="asana" class="rounded-3xl overflow-hidden border border-gray-200 bg-gradient-to-r from-emerald-50 to-white">
+  <div class="p-8 md:p-10 grid md:grid-cols-2 gap-8 items-center">
+    
+    <!-- Image Left -->
+    <div class="relative">
+      <img
+        :src="asana.image_url"
+        :alt="asana.asana_name"
+        class="w-full h-64 md:h-72 lg:h-80 object-cover rounded-2xl shadow"
+      />
+    </div>
+
+    <!-- Text Right -->
+    <div>
+      <p class="text-sm uppercase tracking-wider text-emerald-700/80 font-medium">Asana of the Day</p>
+      <h2 class="mt-2 text-3xl md:text-4xl font-bold leading-tight">
+        {{ asana.asana_name }}
+        <span class="text-lg text-gray-500">({{ asana.sanskrit_meaning }})</span>
+      </h2>
+      <p class="mt-1 text-sm text-gray-500 italic">Origin: {{ asana.origin }}</p>
+      
+      <p class="mt-4 text-gray-700 leading-relaxed">
+        {{ asana.historical_background }}
+        Benefits include: {{ asana.benefits.join(", ") }}.
+        References: {{ asana.references.join(", ") }}.
+      </p>
+
+      <div class="mt-6 flex items-center gap-3">
+        
+      </div>
+    </div>
+    
+  </div>
+</section>
+
 
       <!-- AI PRACTICE CTA -->
       <section>
@@ -305,18 +310,25 @@
 
             </div>
             <div class="p-5 space-y-3">
-              <h4 class="text-lg font-semibold">{{ event.title }}</h4>
+              <h4 class="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap" :title="event.title">
+  {{ event.title }}
+</h4>
+
               <div class="text-sm text-gray-600 space-y-1">
                 <div class="flex items-center gap-2">
                   <Calendar class="h-4 w-4" />
-                  <span>{{ event.date }}</span>
+                  <span>
+  
+</span>
+
                 </div>
                 <div class="flex items-center gap-2">
                   <MapPin class="h-4 w-4" />
-                  <span>{{ event.location }}</span>
+                  
+
                 </div>
               </div>
-              <p class="text-sm text-gray-500">with {{ event.instructor }}</p>
+            
               <button class="w-full h-10 rounded-xl bg-gray-900 text-white hover:bg-black transition">View</button>
             </div>
           </article>
@@ -325,40 +337,52 @@
 
       <!-- PRACTITIONERS -->
       <section>
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-semibold">Connect with Practitioners</h3>
-          <button class="inline-flex items-center gap-2 px-3 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50">
-            Find More
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-2xl font-semibold">Connect with Practitioners</h3>
+    <router-link 
+          to="/trainers"
+          class="inline-flex items-center gap-2 px-3 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50">
+            See All Events
             <ChevronRight class="h-4 w-4" />
-          </button>
+          </router-link>
+  </div>
+
+  <!-- Horizontal scroll container -->
+  <div class="flex gap-6 overflow-x-auto scrollbar-hide pb-4">
+    <article
+      v-for="(practitioner, index) in practitioners"
+      :key="index"
+      class="max-w-[350px] max-h-[350px] shrink-0 rounded-2xl border border-gray-200 bg-white p-8 hover:shadow transition"
+    >
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-full bg-gray-100 grid place-items-center">
+          <img 
+  :src="practitioner.avatar" 
+  :alt="practitioner.name"
+  class="w-12 h-12 rounded-full object-cover"
+/>
+
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article
-            v-for="(practitioner, index) in practitioners"
-            :key="index"
-            class="rounded-2xl border border-gray-200 bg-white p-6 hover:shadow transition"
+        <div>
+          <h4 class="font-semibold">{{ practitioner.name }}</h4>
+          <span
+            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200"
           >
-            <div class="flex items-center gap-4 mb-4">
-              <div class="w-12 h-12 rounded-full bg-gray-100 grid place-items-center">
-                <User class="h-6 w-6 text-gray-600" />
-              </div>
-              <div>
-                <h4 class="font-semibold">{{ practitioner.name }}</h4>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">{{ practitioner.level }}</span>
-              </div>
-            </div>
-            <p class="text-gray-600">Specialty: {{ practitioner.specialty }}</p>
-            <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
-              <div class="flex items-center gap-1">
-                <Star class="h-4 w-4" />
-                <span>{{ practitioner.rating }}</span>
-              </div>
-              <span>{{ practitioner.sessions }} sessions</span>
-            </div>
-            <button class="w-full mt-5 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50">Connect</button>
-          </article>
+            {{ practitioner.type }}
+          </span>
         </div>
-      </section>
+      </div>
+      <p class="text-gray-600 pt-2 pb-2">{{ practitioner.short }}</p>
+      <p class="text-gray-600 pt-2">E-mail: {{ practitioner.email }}</p>
+      <p class="text-gray-600 pt-2">Phn: {{ practitioner.phone }}</p>
+      
+      <button class="w-full mt-16 h-10 rounded-xl border border-gray-200 bg-black text-white hover:bg-gray-50">
+        Connect
+      </button>
+    </article>
+  </div>
+</section>
+
     </main>
 
     <!-- FOOTER -->
@@ -406,27 +430,27 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 import { usePreferencesStore } from '@/stores/preferences'
-import { Search, MapPin, User, ChevronRight, Camera, Calendar, Star, Facebook, Instagram, Twitter, Mail, Phone } from 'lucide-vue-next'
 import { useEventStore } from '@/stores/event'
-
+import {api} from '../services/api'
+import { Search, MapPin, User, ChevronRight, Camera, Calendar, Star, Facebook, Instagram, Twitter, Mail, Phone } from 'lucide-vue-next'
 const router = useRouter()
 const authStore = useAuthStore()
-const eventStore = useEventStore()
 const ui = useUiStore()
 const prefs = usePreferencesStore()
+const eventStore = useEventStore()
 
-// Search bar input
+// 🔍 Search bar
 const searchQuery = ref('')
-
-// LOCATION PERSISTENCE
+const asana = ref(null);
+// 📍 Location persistence
 const selectedLocation = ref(localStorage.getItem('selectedLocation') || 'New York, NY')
 watch(selectedLocation, (val) => localStorage.setItem('selectedLocation', val))
 
-// Location Modal search
+// 📍 Cities
 const search = ref('')
 const cities = ref([
   { _id: '1', name: 'Nidadavolu' },
@@ -440,15 +464,16 @@ const cities = ref([
   { _id: '9', name: 'Palakollu' },
   { _id: '10', name: 'Tanuku' }
 ])
-
 const filteredCities = computed(() =>
-  cities.value.filter((c) => c.name.toLowerCase().includes(search.value.toLowerCase()))
+  cities.value.filter((c) =>
+    c.name.toLowerCase().includes(search.value.toLowerCase())
+  )
 )
 
-// LEVEL SELECTION MODAL
-const levels = ref(['Beginner', 'Intermediate',  'Expert'])
+// 🎯 Level modal
+const levels = ref(['Beginner', 'Intermediate', 'Expert'])
 function handleLevelSelect(level) {
-  if (!authStore.user || !authStore.user._id) {
+  if (!authStore.user?._id) {
     router.push('/login')
     return
   }
@@ -457,25 +482,28 @@ function handleLevelSelect(level) {
   ui.showLevelModal = false
 }
 
-// AUTH
+// ✅ Auth helpers
 const isLoggedIn = computed(() => !!authStore.user)
 const userName = computed(() => authStore.user?.name || 'Yogi')
-
-// PRACTITIONERS
-const practitioners = ref([
-  { name: 'Lala Sundara', level: 'Master', specialty: 'Hatha Yoga', rating: '4.8', sessions: 120 },
-  { name: 'Ethan Harmony', level: 'Expert', specialty: 'Vinyasa Flow', rating: '4.7', sessions: 95 },
-  { name: 'Sophie Light', level: 'Advanced', specialty: 'Meditation', rating: '4.9', sessions: 80 }
-])
-
+const practitioners=ref([])
+// 🧘 Practitioners list
+async function fetchPractitioners() {
+      try {
+        const res = await api.get("/trainers");
+        practitioners.value = res.data;
+      } catch (err) {
+        console.error("Error fetching practitioners:", err);
+      }
+    }
 function openProfilePage() {
   router.push('/profile')
 }
 
-// EVENTS
+// 📅 Events
 const events = ref([])
+
 function handleLocationSelect(city) {
-  if (!authStore.user || !authStore.user._id) {
+  if (!authStore.user?._id) {
     router.push('/login')
     return
   }
@@ -483,31 +511,55 @@ function handleLocationSelect(city) {
   selectedLocation.value = city
   authStore.updatePreferences({ city })
   ui.showLocationModal = false
-  ui.showLevelModal = true // open level modal after selecting location
+  ui.showLevelModal = true
 }
 
 async function loadEventsForUser(user) {
-  if (user && user._id) {
-    const fetchedEvents = await eventStore.fetchUpcomingEvents(user._id)
-    events.value = fetchedEvents || []
-    if (user?.city) prefs.setCity(user.city)
-    if (user?.level) prefs.setLevel(user.level)
+  if (!user?._id) {
+    console.warn('⚠️ No user loaded yet, skipping event fetch')
+    return
   }
+
+  console.log('🎯 Fetching events for userId:', user._id)
+  const fetchedEvents = await eventStore.fetchUpcomingEvents(user._id)
+  console.log('📦 Raw fetchedEvents:', fetchedEvents)
+
+  events.value = (fetchedEvents || []).map(e => ({
+    title: e.title || 'Untitled Event',
+    date: e.start
+      ? new Date(e.start).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })
+      : 'Date TBD',
+    location: e.address?.trim() || e.city?.trim() || 'Location TBD',
+    instructor: e.organizer?.name?.trim() || 'Unknown',
+    image: e.image || '/fallback-image.jpg'
+  }))
 }
 
+// ⏳ Load profile first, then events
 onMounted(async () => {
   await authStore.fetchProfile()
   await loadEventsForUser(authStore.user)
+  await fetchPractitioners()
+  try {
+    const res = await api.get("/asanas/today"); 
+    asana.value = res.data; // make sure backend returns single object
+  } catch (err) {
+    console.error("Error fetching Asana of the Day:", err);
+  }
 })
 
+// 👀 Watch for authStore.user changes (in case profile loads later)
 watch(
   () => authStore.user,
-  async (user) => {
-    await loadEventsForUser(user)
+  (newUser) => {
+    if (newUser?._id) {
+      loadEventsForUser(newUser)
+    }
   },
-  { immediate: true }
+  { immediate: false }
 )
 </script>
+
 
 
 
@@ -516,4 +568,14 @@ watch(
 :root {
   --brand-emerald: #059669;
 }
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 </style>

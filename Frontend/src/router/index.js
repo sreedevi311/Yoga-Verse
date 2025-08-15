@@ -5,7 +5,7 @@ import LandingPage from '../components/LandingPage.vue'
 import Signup from '../components/SignUp.vue'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
-//import Trainers from '../components/Trainers.vue'
+import Trainers from '../components/Trainers.vue'
 import EventPage from '../components/EventPage.vue'
 import Aipractice from '../components/AiPractice.vue'
 
@@ -34,11 +34,11 @@ const routes = [
     name: 'Home',
     component:Home
   },
-   /*{
+   {
     path:'/trainers',
     name:'Trainers',
     component:Trainers
-  },*/
+  },
 
   {
     path:'/profile',
@@ -50,6 +50,7 @@ const routes = [
   name:'EventPage',
   component:EventPage
 },
+
 {
     path:'/ai-practice',
     name: 'Aipractice',

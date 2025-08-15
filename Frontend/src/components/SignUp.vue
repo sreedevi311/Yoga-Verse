@@ -207,7 +207,6 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { useUiStore } from '@/stores/ui'
 
 // Reactive state
 const fullName = ref('')
@@ -223,9 +222,9 @@ const googleErrorMessage = ref('')
 const signupError = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
-const ui = useUiStore()
+
 // Form validation
-const validateEmail = (email) => /\S+@\S+\.\S+/.test(email)
+const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)
 
 const isFormValid = computed(() => {
   return fullName.value &&
@@ -242,11 +241,14 @@ const handleSubmit = async () => {
   if (!isFormValid.value) {
     errors.value = {
       fullName: fullName.value ? '' : 'Full name is required',
-      email: email.value ? (validateEmail(email.value) ? '' : 'Invalid email format') : 'Email is required',
+      email: email.value
+        ? (validateEmail(email.value) ? '' : 'Enter a valid mail')
+        : 'Email is required',
       password: password.value ? '' : 'Password is required',
       confirmPassword: confirmPassword.value ? '' : 'Confirm password is required',
       agreeToTerms: agreeToTerms.value ? '' : 'You must agree to the terms'
     }
+
     if (password.value && confirmPassword.value && password.value !== confirmPassword.value) {
       errors.value.confirmPassword = 'Passwords do not match'
     }
@@ -260,7 +262,6 @@ const handleSubmit = async () => {
     if (authStore.user.role === 'admin') {
       router.push('/admin-panel')
     } else {
-      ui.showLocationModal=true
       router.push('/Home')
     }
   } catch (error) {
@@ -270,6 +271,10 @@ const handleSubmit = async () => {
     isLoading.value = false
   }
 }
+
+// Gmail-only validation function
+
+
 
 // Google signup handler
 const handleGoogleSignup = async () => {

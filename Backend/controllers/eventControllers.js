@@ -1,6 +1,6 @@
 const Event = require('../models/event.model'); 
 const User=require('../models/user.model')
-
+const Trainer=require('../models/trainers.model')
 const getEventsByTheme = async (req, res) => {
   try {
     const userId = req.user?.userId;
@@ -71,7 +71,7 @@ const userCityUpcomingDayEvents = async (req, res) => {
       console.log("⚠️ No upcoming events found for city:", userCity);
       return res.status(200).json({ message: "No upcoming events found", events: [] });
     }
-
+console.log(events)
     console.log(`🎉 Found ${events.length} upcoming event(s) for city: ${userCity}`);
     events.forEach((e, i) => {
       console.log(`   ${i + 1}. ${e.title} - ${new Date(e.start).toLocaleString()}`);

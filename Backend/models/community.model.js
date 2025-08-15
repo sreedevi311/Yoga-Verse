@@ -12,11 +12,7 @@ const postSchema = new mongoose.Schema({
 });
 
 const communitySchema = new mongoose.Schema({
-  theme: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Theme', // reference to the Theme collection
-    required: true
-  },
+  
   cities: [String],
   posts: [postSchema]
 });
